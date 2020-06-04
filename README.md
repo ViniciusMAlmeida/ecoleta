@@ -1,2 +1,3 @@
 # ecoleta
-Projeto de estudo
+Projeto de estudo referente ao evento NLW (Next Level Week)
+Creditos para Rocketseat
