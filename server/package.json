@@ -4,7 +4,8 @@
   "description": "Projeto de estudo referente ao evento NLW (Next Level Week)",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev src/server.ts"
+    "dev": "ts-node-dev src/server.ts",
+    "knex:migrate": "knex migrate:latest --knexfile knexfile.ts migrate:latest"
   },
   "repository": {
     "type": "git",
