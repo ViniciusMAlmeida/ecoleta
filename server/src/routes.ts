@@ -29,7 +29,7 @@ routes.post('/points', async (request, response) => {
     items,
   } = request.body
 
-  const ids = await knex('points').insert({
+  const insertedIds = await knex('points').insert({
     image: 'image-fake',
     name,
     email,
@@ -40,10 +40,12 @@ routes.post('/points', async (request, response) => {
     uf,
   })
 
+  const point_id = insertedIds[0]
+
   const pointItems = items.map((item_id: number) => {
     return {
       item_id,
-      point_id: ids[0],
+      point_id,
     }
   })
 
