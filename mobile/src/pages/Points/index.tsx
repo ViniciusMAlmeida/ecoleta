@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Constants from 'expo-constants'
 import { Feather as Icon } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import {
   View,
   Text,
@@ -30,6 +30,11 @@ interface Points {
   longitude: number
 }
 
+interface Params {
+  uf: string
+  city: string
+}
+
 const Points = () => {
   const [items, setItems] = useState<Item[]>([])
   const [selectedItems, setSelectedItems] = useState<number[]>([])
@@ -38,6 +43,11 @@ const Points = () => {
     0,
     0,
   ])
+
+  const navigator = useNavigation()
+  const route = useRoute()
+
+  const routeParams = route.params as Params
 
   useEffect(() => {
     api.get('items').then((response) => {
@@ -49,15 +59,15 @@ const Points = () => {
     api
       .get('points', {
         params: {
-          city: 'Sarandi',
-          uf: 'PR',
-          items: [1, 2],
+          city: routeParams.city,
+          uf: routeParams.uf,
+          items: selectedItems,
         },
       })
       .then((response) => {
         setPoints(response.data)
       })
-  }, [])
+  }, [selectedItems])
 
   useEffect(() => {
     async function loadPosition() {
@@ -80,8 +90,6 @@ const Points = () => {
 
     loadPosition()
   }, [])
-
-  const navigator = useNavigation()
 
   function handleNavigateBack() {
     navigator.navigate('Home')
